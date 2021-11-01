@@ -1,0 +1,83 @@
+<!--############################################################
+################################################################
+##	Name: article_list.html
+##	Author: Bradley Dowling, 2021
+##	Description: article_view.html sets the view for a list 
+##               of articles within an issue of the journal.
+-->
+
+{% extends "articles/base_layout.html" %}
+
+{% block content %}
+<header class="main-header" style="background-image: url('/media/{{ journal.banner }}');"></header>
+<h4 id="volume-title"><a href="/articles/volume_{{ journal.volume_number }}" style="text-decoration: none;">Conversations with a Neuron, Volume {{ journal.volume_number }}</a></h4>
+
+<section class="row side-right gutter">
+	<div class="column one" id="content-column">
+		<div id="preface">
+			<h4 class="type-header">[-] Preface</h4>
+			<div class="content" style="max-height: none;">
+			{{ journal.preface|safe }}
+			</div>
+		</div>
+		<div id="article-list">
+			<h4 class="type-header" id="neuroanatomy">[+] Neuroanatomy</h4>
+				<div class="content">
+				{% for article in neuroanatomy_list %}
+					<a href="/articles/article_{{ article.id }}">
+						<p class="article-title"><b>{{ article.title }}</b></p>
+					</a>
+					<p class="article-author"><b>{{ article.author.first_name }} {{ article.author.last_name }}</b></p>
+					<p class="article-summary">{{ article.summary }}</p>
+				{% endfor %}
+					<div class="list-controls">
+						<p class="top-link">[ <a class="top-link" href="#neuroanatomy">TOP</a> ]</p>
+						<p class="close-link">[ <a class="close-link-text" onclick="closeSection('neuroanatomy')">CLOSE</a> ]</p>
+					</div>
+				</div>
+			<h4 class="type-header" id="neurophysiology">[+] Neurophysiology</h4>
+				<div class="content">
+				{% for article in neurophysiology_list %}
+					<a href="/articles/article_{{ article.id }}">
+						<p class="article-title"><b>{{ article.title }}</b></p>
+					</a>
+					<p class="article-author"><b>{{ article.author.first_name }} {{ article.author.last_name }}</b></p>
+					<p class="article-summary">{{ article.summary }}</p>
+				{% endfor %}
+					<div class="list-controls">
+						<p class="top-link">[ <a class="top-link" href="#neurophysiology">TOP</a> ]</p>
+						<p class="close-link">[ <a class="close-link-text" onclick="closeSection('neurophysiology')">CLOSE</a> ]</p>
+					</div>
+				</div>
+			<h4 class="type-header" id="neuroreview">[+] Neuroscience In Review</h4>
+				<div class="content">
+				{% for article in neuroreview_list %}
+					<a href="/articles/article_{{ article.id }}">
+						<p class="article-title"><b>{{ article.title }}</b></p>
+					</a>
+					<p class="article-author"><b>{{ article.author.first_name }} {{ article.author.last_name }}</b></p>
+					<p class="article-summary">{{ article.summary }}</p>
+				{% endfor %}
+					<div class="list-controls">
+						<p class="top-link">[ <a class="top-link" href="#neuroreview">TOP</a> ]</p>
+						<p class="close-link">[ <a class="close-link-text" onclick="closeSection('neuroreview')">CLOSE</a> ]</p>
+					</div>
+				</div>
+		</div>
+	</div>
+	<div class="column two" id="info-column">
+		<div class="info-block">
+			<img class="journal-image" src="/media/{{ journal.cover }}">
+			<div class="info">
+				<p><b>Chief Editor:</b> {{ journal.editor_first_name }} {{ journal.editor_last_name }}</p>
+				<p><b>Publication Date:</b> {{ publication_month }} {{ publication_year }}</p>
+				<p><b>Supervising Staff:</b> Allison Coffin, PhD & Dale Fortin, PhD</p>
+				{% if journal.downloadable_file %}
+				<p><b>Download:</b> <a href="{{ journal.downloadable_file.url }}" download>PDF</a></p>
+        {% endif %}
+			</div>
+		</div>
+	</div>
+</section>
+
+{% endblock %}

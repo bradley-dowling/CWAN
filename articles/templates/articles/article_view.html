@@ -1,0 +1,55 @@
+<!--############################################################
+################################################################
+##	Name: article_view.html
+##	Author: Bradley Dowling, 2021
+##	Description: article_view.html sets the view for a single
+##               article.
+-->
+
+{% extends "articles/base_layout.html" %}
+
+{% block content %}
+<header class="main-header" style="background-image: url('/media/{{ journal.banner }}');"></header>
+<h4 id="volume-title"><a href="/articles/volume_{{ journal.volume_number }}" style="text-decoration: none;">Conversations with a Neuron, Volume {{ journal.volume_number }}</a></h4>
+
+<section class="row gutter tall">
+	<div class="column one">
+		<div id="article">
+			<div id="article_summary_block">
+				<h4 id="article-title">{{ article.title }}</h4>
+				{% if article.summary != None and article.summary != '' %}
+					<p>{{ article.summary }}</p>
+				{% endif %}
+				<p style="padding-bottom: 0px;"><span style="font-weight: bold;">Author: </span>{{ article.author }}</p>
+				{% if journal.downloadable_file %}
+				<p style="padding-bottom: 0px; font-weight: bold">Download: [ <a href="/articles/download/article_{{ article.id }}" style="padding-bottom: 0px; font-weight: normal;" download>PDF</a> ]</p>
+				{% endif %}
+				<p style="font-weight: bold;">{{ article.type }}</p>
+			</div>
+			<div class="divider-line"></div>
+			{{ article.contents|safe }}
+			<div class="divider-line"></div>
+			<h4 class="type-header" id="references-title">[+] References</h4>
+				<div class="citation-content">
+				{% for citation in citation_list %}
+					<div id="citation_{{ citation.citation_number }}" class="article-citation"><b>{{ citation.citation_number }}.</b>{{ citation.citation_text|safe }}</div>
+				{% endfor %}
+				</div>
+			{% if other_articles|length > 0 %}
+				<h4 class="type-header" id="other-work-title">[+] Other Work By {{ article.author }}</h4>
+				<div class="other-work-content">
+					
+						{% for article in other_articles %}
+						<a href="/articles/article_{{ article.id }}">
+							<p class="article-title"><b>{{ article.title }}</b></p>
+						</a>
+						<p class="article-type"><b>{{ article.type }}</b></p>
+						<p class="article-summary">{{ article.summary }}</p>
+						{% endfor %}
+					
+				</div>
+			{% endif %}
+		</div>
+	</div>
+</section>
+{% endblock %}

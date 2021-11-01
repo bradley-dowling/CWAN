@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<!--############################################################
+################################################################
+##	Name: base_layout.html
+##	Author: Bradley Dowling, 2021
+##	Description: base_layout.html is an implementation of WSUV's
+##               Spine framework. It has been adapted for
+##               Conversations with a Neuron.
+-->
+
+<!--[if lt IE 7]> <html class="no-svg lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]><html class="no-svg lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]><html class="no-svg lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--><html lang="en"><!--<![endif]-->
+
+<head>
+
+	<meta charset="utf-8">
+	<title>Home | WSUV Neuroscience</title>
+
+	<!-- The WSU logo as a favicon -->
+	<link rel="shortcut icon" href="https://repo.wsu.edu/spine/2/favicon.ico" />
+
+	<!-- The primary WSU Spine stylesheet -->
+	<link href="https://repo.wsu.edu/spine/2/spine.min.css" rel="stylesheet" type="text/css" />
+
+	<!-- Site specific stylesheets should be inserted after the Spine CSS above. -->
+
+	<meta name="viewport" content="width=device-width, user-scalable=yes">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- Current library versions can be found at https://developers.google.com/speed/libraries/ -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+	<script src="https://repo.wsu.edu/spine/2/spine.min.js"></script>
+
+	<!-- Site specific JavaScript should be inserted after jQuery and the Spine JS above, ideally at the end of the document. -->
+
+	<!-- Include an HTML5 compatibility shim for HTML5 -->
+	<!--[if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script><![endif]-->
+
+	<!-- Ensure the Spine is displayed fully when no-JS -->
+	<noscript>
+		<style>
+			#spine .spine-sitenav ul ul li {
+				display: block !important;
+			}
+		</style>
+	</noscript>
+
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/css/figure_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/css/article_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/css/header_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/css/article_list_styles.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'articles/css/extended_spine_styles.css' %}">
+
+</head>
+
+<body>
+<a href="#wsu-main-content" class="screen-reader-shortcut">Skip to main content</a>
+<a href="#spine-navigation" class="screen-reader-shortcut">Skip to navigation</a>
+
+<div id="jacket" class="vancouver-signature">
+
+	<div id="binder" class="fluid max-1188">
+
+		<!-- Conversations with a Neuron content block -->
+		<main id="wsu-main-content">
+			{% block content %}{% endblock %}
+		</main><!-- End #wsu-main-content -->
+
+		<div id="spine" class="white bleed shelved skimmed">
+
+			<div id="glue">
+
+				<header class="spine-header">
+					<a href="https://vancouver.wsu.edu" class="vancouver-signature" id="wsu-signature">Washington State University Vancouver</a>
+				</header>
+
+				<section id="wsu-actions" class="spine-actions">
+
+					<!-- Actions have not been fully implemented at this time -->
+					<ul id="wsu-actions-tabs" class="spine-actions-tabs clearfix">
+						<li id="wsu-search-tab" class="spine-search-tab closed">
+							<button>Search</button>
+						</li>
+						<li id="wsu-contact-tab" class="spine-contact-tab closed">
+							<button>Contact</button>
+						</li>
+						<li id="wsu-share-tab" class="spine-share-tab closed">
+							<button>Share</button>
+						</li>
+						<li id="wsu-print-tab" class="spine-print-tab closed">
+							<button>Print</button>
+						</li>
+					</ul>
+
+				</section><!-- End #wsu-actions .spine-actions -->
+
+				<section id="spine-navigation" class="spine-navigation">
+
+					<!-- The main navigation for the site. -->
+					<nav class="spine-sitenav">
+
+						<ul>
+
+							<li><a {% if isHome %}class="current"{% endif %} href="/">Home</a></li>
+							<li><a href="">News & Events</a></li>
+							<li><a href="#">Conversations with a Neuron</a>
+								<ul>
+										<li><a {% if journal.volume_number == 1 %}class="current"{% endif %} href="/articles/volume_1/">Volume 1</a></li>									
+										<li><a {% if journal.volume_number == 2 %}class="current"{% endif %} href="/articles/volume_2/">Volume 2</a></li>
+										<li><a {% if journal.volume_number == 3 %}class="current"{% endif %} href="/articles/volume_3/">Volume 3</a></li>
+								</ul>
+							</li>
+							<li><a href="">Learning Modules</a></li>
+							<li><a href="#">Research</a>
+								<ul>
+									<li><a href="https://labs.wsu.edu/allison-coffin/">Coffin Lab</a></li>
+									<li><a href="https://labs.wsu.edu/michael-morgan/">Morgan Lab</a></li>
+									<li><a href="https://labs.wsu.edu/hearcomm/">Portfors Lab</a></li>
+								</ul>
+							</li>
+
+						</ul>
+
+					</nav>
+
+					<!-- Offsite navigation for the site. Will be implemented at later time. -->
+					<nav class="spine-offsitenav">
+						<ul>
+						</ul>
+					</nav>
+
+				</section><!-- End #spine-navigation .spine-navigation -->
+
+				<!-- Social and required global WSU links. -->
+				<footer class="spine-footer">
+					<nav id="wsu-social-channels" class="spine-social-channels">
+						<ul>
+							<li class="facebook-channel"><a href="https://www.facebook.com/wsuvancouver">Facebook</a></li>
+							<li class="twitter-channel"><a href="https://twitter.com/WSUVancouver">Twitter</a></li>
+							<li class="youtube-channel"><a href="https://www.youtube.com/wsuvancouver">YouTube</a></li>
+							<li class="directory-channel"><a href="https://socialmedia.wsu.edu/">Social media at WSU</a></li>
+						</ul>
+					</nav>
+					<nav id="wsu-global-links" class="spine-global-links">
+						<ul>
+							<li class="mywsu-link"><a href="https://my.wsu.edu/">myWSU</a></li>
+							<li class="access-link"><a href="https://access.wsu.edu/">Access</a></li>
+							<li class="policies-link"><a href="https://policies.wsu.edu/">Policies</a></li>
+							<li class="copyright-link"><a href="https://copyright.wsu.edu">&copy;</a></li>
+						</ul>
+					</nav>
+				</footer><!-- End .spine-footer -->
+
+			</div><!-- End #glue -->
+
+		</div><!-- End #spine -->
+
+	</div><!-- End #binder -->
+
+</div><!-- End #jacket -->
+
+<!-- Adjust this sample contact information to reflect appropriate data for the site. -->
+<div id="contact-details" itemscope itemtype="http://schema.org/Organization">
+	<span itemprop="department"  content="Neuroscience"></span>
+	<span itemprop="name" content="Washington State University Vancouver"></span>
+	<div itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+		<span itemprop="location" content="14204 NE Salmon Creek Ave"></span>
+		<span itemprop="streetAddress" content="Your PO Box"></span>
+		<span itemprop="addressLocality" content="Vancouver"></span>
+		<span itemprop="addressRegion" content="WA"></span>
+		<span itemprop="postalCode" content="98686"></span>
+	</div>
+	<span itemprop="email" content="bradley.dowling@wsu.edu"></span>
+	<span itemprop="contactPoint" content="http://contactpage.wsu.edu"></span>
+	<span itemprop="url" content="https://cas.vancouver.wsu.edu/neuroscience"></span>
+</div>
+</body>
+<!-- Additional functionality controlling the article lists -->
+<script src="{% static 'articles/js/article_list.js' %}"></script>
+</html>

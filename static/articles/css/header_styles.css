@@ -1,0 +1,37 @@
+.main-header {
+	background-repeat: no-repeat;
+	background-position: left;
+	background-size: cover;
+	height: 130px;
+	box-shadow: 0px -3px 6px 0px #8d959a;
+}
+
+.header-group {
+	background-color: #981e32;
+}
+
+#volume-title {
+	background-color: #981e32;
+	padding-left: 14px;
+	padding-right: 14px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	box-shadow: 0px 0px 6px 0px #8d959a;
+	margin-bottom: 20px;
+}
+
+#volume-title a {
+	color: white;
+	font-size: 32px;
+	font-weight: normal;
+}
+
+@media only screen and (max-width: 693px) {
+	.main-header {
+    display: none;
+  }
+
+	#volume-title a {
+    font-size: 22px;
+  }
+}
