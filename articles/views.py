@@ -1,15 +1,22 @@
 from django.shortcuts import render
 from django.views import generic
 from .models import *
-# Create your views here.
 from django.http import HttpResponse
 import datetime
 import io
 import PyPDF2
 from django.http import FileResponse
 
+################################################################
+################################################################
+## Name: views.py
+## Author: Bradley Dowling, 2021
+## Description: views.py defines how HTTP requests are handled.
+##              
+
 def home(request):
-    """View function for the home page (currently under construction...)"""
+    # View function for the home page (currently under construction...)
+    
     context = {
         'isHome': True,
     }
@@ -17,7 +24,8 @@ def home(request):
     return render(request, 'articles/index.html', context=context)
 
 def article_list(request, volume_number):
-    """View function to display articles in a specific volume"""
+    # View function to display articles in a specific volume
+    
     article_list = Article.objects.filter(journal__volume_number=volume_number)
     journal = Journal.objects.get(volume_number=volume_number)
     publication_month = journal.publication_date.strftime("%b")
@@ -25,6 +33,7 @@ def article_list(request, volume_number):
     neuroanatomy_list = article_list.filter(type__type='Neuroanatomy')
     neurophysiology_list = article_list.filter(type__type='Neurophysiology')
     neuroreview_list = article_list.filter(type__type='Neuroscience In Review')
+    
     context = {
         'volume_number': volume_number,
         'article_list': article_list,
@@ -38,12 +47,14 @@ def article_list(request, volume_number):
     return render(request, 'articles/article_list.html', context=context)
 
 def article_view(request, article_id):
-    """View function to display article details"""
+    # View function to display article details
+    
     article = Article.objects.get(id=article_id)
     author = article.author.id
     journal = article.journal
     citation_list = Citation.objects.filter(article_id=article_id).order_by('citation_number')
     other_articles = Article.objects.filter(author_id=author).exclude(id=article_id)
+    
     context = {
         'article': article,
         'citation_list': citation_list,
@@ -53,7 +64,8 @@ def article_view(request, article_id):
     return render(request, 'articles/article_view.html', context=context)
 
 def article_download(request, article_id):
-    """View function for returning a PDF of an article"""
+    # View function for returning a PDF of an article
+    
     article = Article.objects.get(id=article_id)
     first_page = article.first_page
     last_page = article.last_page
@@ -74,4 +86,5 @@ def article_download(request, article_id):
     # Set up filename
     file_name = "CWAN_{last_name}_{article_type}_{year}.pdf".format(last_name = article.author.last_name, article_type = article.type, year = article.journal.publication_date.year)
     
+    # Done!
     return FileResponse(buffer, as_attachment=True, filename=file_name)
